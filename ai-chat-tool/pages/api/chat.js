@@ -1,4 +1,5 @@
 // pages/api/chat.js
+import { createAssistant } from '@/lib/functions';
 import { withOpenAIClient } from '../../lib/openai';
 
 export default async function handler(req, res) {
@@ -11,18 +12,23 @@ export default async function handler(req, res) {
 
     try {
       const client = withOpenAIClient();
-      
+      // const threadMessages = await client.beta.threads.messages.create(
+      //   "thread_abc123",
+      //   { role: "user", content: "How does AI work? Explain it in simple terms." }
+      // );
       // Send the message to the specified thread
-      await client.createMessage({
-        thread_id: thread_id,
+      await client.beta.threads.messages.create(thread_id,{
         role: 'user',
         content: message
       });
 
       // Create and start a new run in the conversation thread
-      const run = await client.createRun({
-        thread_id: thread_id
-        // You can add additional parameters if needed
+      // const run = await openai.beta.threads.runs.create(
+      //   "thread_abc123",
+      //   { assistant_id: "asst_abc123" }
+      // );
+      const run = await client.beta.threads.runs.create(thread_id,{
+        assistant_id: createAssistant()
       });
 
       res.status(200).json({ run_id: run.id });
