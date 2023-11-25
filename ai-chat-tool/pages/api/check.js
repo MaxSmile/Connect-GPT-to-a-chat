@@ -1,26 +1,55 @@
-// pages/api/check.js
 import { withOpenAIClient } from '../../lib/openai';
+import { createLead } from '../../lib/functions';
+import { writeLog } from '../../lib/logger';
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const { thread_id, run_id } = req.body;
+  const { thread_id, run_id } = req.body;
 
-    if (!thread_id || !run_id) {
-      return res.status(400).json({ error: 'Missing thread_id or run_id' });
+  if (!thread_id || !run_id) {
+    writeLog("Error: Missing thread_id or run_id in /check");
+    return res.status(400).json({ response: "error" });
+  }
+
+  const client = withOpenAIClient();
+  const startTime = Date.now();
+
+  try {
+    while (Date.now() - startTime < 9000) {
+      const runStatus = await client.retrieveRunStatus(thread_id, run_id);
+      writeLog(`Checking run status: ${runStatus.status}`);
+
+      if (runStatus.status === 'completed') {
+        const messages = await client.listMessages(thread_id);
+        const messageContent = messages[0].content;
+
+        writeLog("Run completed, returning response");
+        return res.status(200).json({
+          response: messageContent,
+          status: "completed"
+        });
+      }
+
+      if (runStatus.status === 'requires_action') {
+        for (let toolCall of runStatus.requiredAction.submitToolOutputs.toolCalls) {
+          if (toolCall.function.name === "create_lead") {
+            const arguments = JSON.parse(toolCall.function.arguments);
+            const output = await createLead(arguments.name, arguments.phone);
+
+            await client.submitToolOutputs(thread_id, run_id, [{
+              tool_call_id: toolCall.id,
+              output: JSON.stringify(output)
+            }]);
+          }
+        }
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
-    try {
-      const client = withOpenAIClient();
-      // Add logic to check run status
-      // This will depend on OpenAI Node.js SDK
-      // ...
-
-      res.status(200).json({ response: 'some-response', status: 'completed' });  // Replace with actual response and status
-    } catch (error) {
-      console.error('Error in checking run:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  } else {
-    res.status(405).json({ error: 'Method Not Allowed' });
+    writeLog("Run timed out");
+    return res.status(200).json({ response: "timeout" });
+  } catch (error) {
+    writeLog(`Error in checking run: ${error}`);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
