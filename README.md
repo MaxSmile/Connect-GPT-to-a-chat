@@ -22,6 +22,14 @@ Before installation, ensure you have Node.js and npm installed on your system.
 2. **Install Dependencies**
    ```bash
    npm install
+
+   ```
+
+   or just 
+   
+   ```bash
+   yarn
+
    ```
 
 3. **Set Up Environment Variables**
