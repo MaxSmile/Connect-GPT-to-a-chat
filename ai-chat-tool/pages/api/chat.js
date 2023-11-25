@@ -34,9 +34,9 @@ export default async function handler(req, res) {
       res.status(200).json({ run_id: run.id });
     } catch (error) {
       console.error('Error in chat:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: 'Internal Server Error. '+error.message });
     }
   } else {
-    res.status(405).json({ error: 'Method Not Allowed' });
+    res.status(405).json({ error: 'Method Not Allowed: '+req.method });
   }
 }
