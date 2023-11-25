@@ -2,7 +2,8 @@
 import axios from 'axios';
 import fs from 'fs/promises';
 
-const openaiApiKey = process.env.OPENAI_API_KEY;
+
+//const openaiApiKey = process.env.OPENAI_API_KEY;
 const airtableApiKey = process.env.AIRTABLE_API_KEY;
 
 // Add lead to Airtable
@@ -41,5 +42,25 @@ export async function createAssistant() {
 
     // Your assistant creation logic here...
     // Note: This part will depend on the OpenAI Node.js SDK
+  }
+}
+
+
+// /lib/logger.js
+
+
+// Function to append logs to a file
+export function writeLog(message) {
+  const logsFilePath = path.resolve('./logs.txt'); // Ensure the path is correct for your project setup
+
+  try {
+    const timestamp = new Date().toISOString();
+    const logEntry = `${timestamp}: ${message}\n`;
+
+    // Append the log entry to the file
+    fs.appendFileSync(logsFilePath, logEntry, 'utf8');
+  } catch (error) {
+    console.error('Error writing to log file:', error);
+    // Handle the error as needed
   }
 }
