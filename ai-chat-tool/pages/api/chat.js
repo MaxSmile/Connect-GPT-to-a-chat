@@ -3,7 +3,6 @@ import { createAssistant } from '@/lib/functions';
 import { withOpenAIClient } from '../../lib/openai';
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
     const { thread_id, message } = req.body;
 
     if (!thread_id) {
@@ -36,7 +35,4 @@ export default async function handler(req, res) {
       console.error('Error in chat:', error);
       res.status(500).json({ error: 'Internal Server Error. '+error.message });
     }
-  } else {
-    res.status(405).json({ error: 'Method Not Allowed: '+req.method });
-  }
 }
