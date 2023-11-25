@@ -20,15 +20,16 @@ export default function Demo() {
   return (
     <main
     className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
-    <div> <h1>add animation</h1> 
+    <div>
     <Image
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
           src="/animation.svg"
           alt="animation"
-          width={2000}
+          width={200}
           height={200}
           priority
-        /></div>
+        />
+    </div>
 
      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-2 lg:text-left">
 
