@@ -32,8 +32,8 @@ export default async function handler(req, res) {
       if (runStatus.status === 'requires_action') {
         for (let toolCall of runStatus.requiredAction.submitToolOutputs.toolCalls) {
           if (toolCall.function.name === "create_lead") {
-            const arguments = JSON.parse(toolCall.function.arguments);
-            const output = await createLead(arguments.name, arguments.phone);
+            const args = JSON.parse(toolCall.function.arguments);
+            const output = await createLead(args.name, args.phone);
 
             await client.submitToolOutputs(thread_id, run_id, [{
               tool_call_id: toolCall.id,
