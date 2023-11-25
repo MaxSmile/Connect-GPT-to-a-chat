@@ -50,6 +50,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ response: "timeout" });
   } catch (error) {
     writeLog(`Error in checking run: ${error}`);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    return res.status(500).json({ error: 'Internal Server Error. '+error.message });
   }
 }
