@@ -15,11 +15,11 @@ export default async function handler(req, res) {
 
   try {
     while (Date.now() - startTime < 9000) {
-      const runStatus = await client.retrieveRunStatus(thread_id, run_id);
+      const runStatus = await client.beta.threads.runs.retrieve(thread_id, run_id);
       writeLog(`Checking run status: ${runStatus.status}`);
 
       if (runStatus.status === 'completed') {
-        const messages = await client.listMessages(thread_id);
+        const messages = await client.beta.threads.messages.list(thread_id);
         const messageContent = messages[0].content;
 
         writeLog("Run completed, returning response");
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
             const args = JSON.parse(toolCall.function.arguments);
             const output = await createLead(args.name, args.phone);
 
-            await client.submitToolOutputs(thread_id, run_id, [{
+            await client.beta.threads.runs.submitToolOutputs(thread_id, run_id, [{
               tool_call_id: toolCall.id,
               output: JSON.stringify(output)
             }]);
