@@ -1,9 +1,8 @@
 // lib/openai.js
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 
 export function withOpenAIClient() {
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-  return new OpenAIApi(configuration);
+  return  new OpenAI({apiKey: process.env["OPENAI_API_KEY"]
+});
+
 }
