@@ -28,7 +28,7 @@ export default function Demo() {
           width={200}
           height={200}
           priority
-        />
+    />
     </div>
 
      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-2 lg:text-left">
