@@ -33,8 +33,8 @@ export default function Demo() {
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
           src="/baner.svg"
           alt="banner"
-          width={300}
-          height={150}
+          width={600}
+          height={350}
           priority
         />
 
