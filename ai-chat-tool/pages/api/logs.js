@@ -1,11 +1,10 @@
 // pages/api/logs.js
-import fs from 'fs';
+import { retrieveLogs } from '../../lib/logger';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-      // Make sure the path to the logs file is correct and accessible
-      const logs = fs.readFileSync('public/logs.txt', 'utf8');
+      const logs = await retrieveLogs();
       res.status(200).json({ logs });
     } catch (error) {
       console.error('Error reading logs:', error);

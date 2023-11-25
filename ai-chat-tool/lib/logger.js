@@ -1,19 +1,43 @@
-// /lib/logger.js
-import fs from 'fs';
-import path from 'path';
+import { kv } from "@vercel/kv";
 
-// Function to append logs to a file
-export function writeLog(message) {
-  const logsFilePath = path.resolve('public/logs.txt'); 
-
+// Function to append logs to the KV store
+export async function writeLog(message) {
   try {
-    const timestamp = new Date().toISOString();
-    const logEntry = `${timestamp}: ${message}\n`;
+    // Retrieve the current counter value
+    let counter = parseInt(await kv.get('log-counter')) || 0;
+    counter += 1;
 
-    // Append the log entry to the file
-    fs.appendFileSync(logsFilePath, logEntry, 'utf8');
+    const timestamp = new Date().toISOString();
+    const logEntry = `${timestamp}: ${message}`;
+
+    // Store the log entry with the counter as the key
+    await kv.set(counter.toString(), logEntry);
+
+    // Update the counter
+    await kv.set('log-counter', counter.toString());
+
+    console.log("Log entry saved successfully.");
   } catch (error) {
-    console.error('Error writing to log file:', error);
-    // Handle the error as needed
+    console.error('Error writing to KV store:', error);
+  }
+}
+
+// Function to retrieve logs from the KV store
+export async function retrieveLogs() {
+  try {
+    const logEntries = [];
+    const counter = parseInt(await kv.get('log-counter')) || 0;
+
+    for (let i = 1; i <= counter; i++) {
+      const logEntry = await kv.get(i.toString());
+      if (logEntry) {
+        logEntries.push(logEntry);
+      }
+    }
+
+    return logEntries;
+  } catch (error) {
+    console.error('Error retrieving logs:', error);
+    return [];
   }
 }
