@@ -28,7 +28,7 @@ export default function Demo() {
           <h2 className={`mb-3 text-2xl font-semibold`}>
             Live chat logs 
           </h2>
-          <p className={`m-0 max-w-[200ch] text-sm opacity-50`}>
+          <p className={`m-0 max-w-[250ch] text-sm opacity-50`}>
             Here you can see the live chat logs between AI and your clients
           </p>
         </div>
