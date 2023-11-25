@@ -11,11 +11,21 @@ export default async function handler(req, res) {
 
     try {
       const client = withOpenAIClient();
-      // Add logic to handle message sending and run creation
-      // This will depend on OpenAI Node.js SDK
-      // ...
+      
+      // Send the message to the specified thread
+      await client.createMessage({
+        thread_id: thread_id,
+        role: 'user',
+        content: message
+      });
 
-      res.status(200).json({ run_id: 'some-run-id' });  // Replace with actual run ID
+      // Create and start a new run in the conversation thread
+      const run = await client.createRun({
+        thread_id: thread_id
+        // You can add additional parameters if needed
+      });
+
+      res.status(200).json({ run_id: run.id });
     } catch (error) {
       console.error('Error in chat:', error);
       res.status(500).json({ error: 'Internal Server Error' });
