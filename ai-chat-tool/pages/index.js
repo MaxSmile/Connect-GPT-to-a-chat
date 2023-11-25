@@ -10,7 +10,7 @@ export default function Home() {
     >
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <a className="flex items-center gap-2" href="/demo">
-        <p className="w-full max-w-md mx-auto text-center py-3 rounded-lg text-white bg-gradient-to-br from-blue-600 to-blue-500 hover:from-blue-600 hover:to-teal-400 shadow-lg px-4">
+        <p className="w-full max-w-md mx-auto text-center py-3 rounded-lg text-white bg-gradient-to-br from-blue-500 to-blue-400 hover:from-blue-700 hover:to-blue-400 shadow-lg px-4">
           Get started with DEMO
         </p>
         </a>
