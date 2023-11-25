@@ -18,10 +18,10 @@ export default function Demo() {
         fetchLogs();
 
         // Set up an interval to fetch logs every 500 milliseconds (0.5 seconds)
-        const intervalId = setInterval(fetchLogs, 500);
+        // const intervalId = setInterval(fetchLogs, 500);
 
-        // Clean up the interval when the component unmounts
-        return () => clearInterval(intervalId);
+        // // Clean up the interval when the component unmounts
+        // return () => clearInterval(intervalId);
     }, []);
 
 
