@@ -1,7 +1,0 @@
-some logs her to go
-blah blah 2023-11-25T14:49:53.905Z: Error in starting conversation:
-2023-11-25T14:50:15.555Z: Error in starting conversation:
-2023-11-25T14:55:37.086Z: Error in starting conversation:client.createThread is not a function
-2023-11-25T14:58:28.149Z: Error in starting conversation:openai is not defined
-2023-11-25T14:58:44.738Z: Error in starting conversation:Cannot read properties of undefined (reading 'threads')
-2023-11-25T14:59:16.683Z: New conversation started with thread ID:

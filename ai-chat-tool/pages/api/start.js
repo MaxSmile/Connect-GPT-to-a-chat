@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       // Create a new conversation thread
       const thread = await client.beta.threads.create();
 
-      writeLog("New conversation started with thread ID:", thread.id);
+      writeLog("New conversation started with thread ID:" + thread.id);
       res.status(200).json({ thread_id: thread.id });
     } catch (error) {
       writeLog('Error in starting conversation:'+ error.message);
