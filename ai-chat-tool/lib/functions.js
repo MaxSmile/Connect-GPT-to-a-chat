@@ -3,7 +3,6 @@ import axios from 'axios';
 import fs from 'fs/promises';
 import path from 'path';
 import { writeLog } from './logger';
-import { initializeOpenAIClient } from './openai';
 import { assistant_instructions } from './prompt';
 
 
