@@ -34,7 +34,7 @@ export default function Demo() {
           src="/baner.svg"
           alt="banner"
           width={600}
-          height={350}
+          height={250}
           priority
         />
 
